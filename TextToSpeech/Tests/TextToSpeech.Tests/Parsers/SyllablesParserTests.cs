@@ -1,5 +1,6 @@
 ﻿namespace TextToSpeech.Tests.Parsers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -46,10 +47,7 @@
         public void GetSyllables_FourthRuleWords_ReturnsValidSyllables()
         {
             // Rule: Якщо з двох приголосних перший глухий або дзвінкий, а другий сонорний, то обидва належать до наступного складу
-            string[] words =
-            {
-                "ко-смос", "ху-до-жник", "те-хні-ка", "о-брій", "мі-дний", "до-бре", "по-трі-бно"
-            };
+            string[] words = { "ко-смос", "ху-до-жник", "те-хні-ка", "о-брій", "мі-дний", "до-бре", "по-трі-бно" };
 
             foreach (string word in words)
             {
@@ -57,6 +55,17 @@
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
+            }
+        }
+
+        [Test]
+        public void GetSyllables_InvalidWords_ThrowsArgumentException()
+        {
+            string[] words = { "ьм", "м'", "'м", "м'ят'я", "ёлка", "рыба", "объявление", "электрик" };
+
+            foreach (string word in words)
+            {
+                Assert.Throws<ArgumentException>(() => this._syllablesParser.GetSyllables(word.Replace("-", "")));
             }
         }
 
@@ -106,6 +115,14 @@
         }
 
         [Test]
+        public void GetSyllables_WordIsNullOrEmptyOrWhiteSpace_ReturnsNoSyllables()
+        {
+            Assert.IsEmpty(this._syllablesParser.GetSyllables(null));
+            Assert.IsEmpty(this._syllablesParser.GetSyllables(string.Empty));
+            Assert.IsEmpty(this._syllablesParser.GetSyllables("  "));
+        }
+
+        [Test]
         public void GetSyllables_WordsWithApostrophe_ReturnsValidSyllables()
         {
             string[] words = { "де-м'ян", "м'я-та", "тор-ф'я-ний", "здо-ро-в'я", "з'їзд", "зв'я-зок", "сі-м'я" };
@@ -131,14 +148,6 @@
 
                 Assert.AreEqual(word.Split('-'), syllables);
             }
-        }
-
-        [Test]
-        public void GetSyllables_WordIsNullOrEmptyOrWhiteSpace_ReturnsNoSyllables()
-        {
-            Assert.IsEmpty(this._syllablesParser.GetSyllables(null));
-            Assert.IsEmpty(this._syllablesParser.GetSyllables(string.Empty));
-            Assert.IsEmpty(this._syllablesParser.GetSyllables("  "));
         }
 
         [SetUp]

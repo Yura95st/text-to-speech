@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    internal interface ISyllablesParser
+    public interface ISyllablesParser
     {
         IEnumerable<string> GetSyllables(string word);
     }

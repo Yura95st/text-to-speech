@@ -3,12 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using ConsoleApplication1.Enums;
 
     using TextToSpeech.Enums;
 
-    internal class SyllablesParser : ISyllablesParser
+    public class SyllablesParser : ISyllablesParser
     {
         private static readonly char[] obstruents = { 'к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш', 'щ' };
 
@@ -165,7 +166,7 @@
 
         private static bool IsValidWord(string word)
         {
-            return word.All(c => SyllablesParser.IsConsonant(c) || SyllablesParser.IsVowel(c) || c == 'ь' || c == '\'');
+            return Regex.IsMatch(word, "^[а-яєіїґ-[ьёъыэ]]+(\'[яюєї])?[а-яєіїґ-[ёъыэ]]*$");
         }
 
         private static bool IsVowel(char c)
