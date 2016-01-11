@@ -1,4 +1,4 @@
-﻿namespace ConsoleApplication1.Enums
+﻿namespace TextToSpeech.Enums
 {
     internal enum ConsonantType
     {

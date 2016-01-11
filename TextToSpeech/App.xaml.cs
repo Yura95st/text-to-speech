@@ -5,10 +5,11 @@
     using System.Windows;
     using System.Windows.Threading;
 
+    using TextToSpeech.Services.PlaybackService;
     using TextToSpeech.Services.SyllablesService;
     using TextToSpeech.Services.TranscriptionService;
-    using TextToSpeech.Services.WordVoiceService;
     using TextToSpeech.ViewModels;
+    using TextToSpeech.ViewModels.BackgroundWorkerWrapper;
     using TextToSpeech.Views;
 
     /// <summary>
@@ -58,7 +59,8 @@
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            this._viewModel = new ApplicationViewModel(new SyllablesService(), new TranscriptionService(), new WordVoiceService());
+            this._viewModel = new ApplicationViewModel(new SyllablesService(), new TranscriptionService(),
+                new PlaybackService(new AsyncBackgroundWorker()));
 
             ApplicationView view = new ApplicationView { DataContext = this._viewModel };
 

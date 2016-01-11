@@ -65,9 +65,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Enums\PlayerState.cs" />
     <Compile Include="Enums\ConsonantType.cs" />
     <Compile Include="Enums\SyllableCuttingMode.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\BackgroundWorkerWrapper\AsyncBackgroundWorker.cs" />
+    <Compile Include="ViewModels\BackgroundWorkerWrapper\IBackgroundWorker.cs" />
+    <Compile Include="ViewModels\BackgroundWorkerWrapper\SyncBackgroundWorker.cs" />
     <Compile Include="ViewModels\Commands\ApplicationViewModelCommands.cs" />
     <Compile Include="Views\ApplicationView.xaml.cs">
       <DependentUpon>ApplicationView.xaml</DependentUpon>
@@ -76,8 +80,8 @@
     <Compile Include="Services\SyllablesService\SyllablesService.cs" />
     <Compile Include="Services\TranscriptionService\ITranscriptionService.cs" />
     <Compile Include="Services\TranscriptionService\TranscriptionService.cs" />
-    <Compile Include="Services\WordVoiceService\IWordVoiceService.cs" />
-    <Compile Include="Services\WordVoiceService\WordVoiceService.cs">
+    <Compile Include="Services\PlaybackService\IPlaybackService.cs" />
+    <Compile Include="Services\PlaybackService\PlaybackService.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utils\Guard.cs" />

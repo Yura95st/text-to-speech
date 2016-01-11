@@ -17,12 +17,12 @@
         private readonly IDictionary<string, string> simplificationRules = new Dictionary<string, string>
         {
             { "сш", "ш" }, { "зж", "ж" }, { "здж", "ждж" }, { "жсь", "зьсь" }, { "шсь", "сь" }, { "чсь", "цьсь" },
-            { "жць", "зьсь" }, { "шць", "сць" }, { "чць", "ць" }, 
+            { "жць", "зьсь" }, { "шць", "сць" }, { "чць", "ць" },
+
             //{ "дж", "джж" }, { "дз", "дзз" }, 
-            { "дс", "дзс" },{ "дц", "дзц" }, { "дч", "джч" }, { "дш", "джш" }, 
-            { "тс", "ц" }, { "тц", "ц" }, { "тч", "ч" }, { "тш", "чш" },
-            { "нстс", "нст" }, { "нтськ", "ньськ" }, { "стськ", "ськ" }, { "стць", "сьць" }, { "стч", "шч" }, { "стд", "зд" },
-            { "стс", "с" }, { "здць", "зьць" }
+            { "дс", "дзс" }, { "дц", "дзц" }, { "дч", "джч" }, { "дш", "джш" }, { "тс", "ц" }, { "тц", "ц" }, { "тч", "ч" },
+            { "тш", "чш" }, { "нстс", "нст" }, { "нтськ", "ньськ" }, { "стськ", "ськ" }, { "стць", "сьць" }, { "стч", "шч" },
+            { "стд", "зд" }, { "стс", "с" }, { "здць", "зьць" }
         };
 
         #region ITranscriptionService Members
@@ -84,9 +84,8 @@
                 }
             }
 
-            foreach (
-                KeyValuePair<string, string> keyValuePair in
-                    this.simplificationRules.OrderByDescending(kvp => kvp.Key.Length))
+            foreach (KeyValuePair<string, string> keyValuePair in
+                this.simplificationRules.OrderByDescending(kvp => kvp.Key.Length))
             {
                 sb = sb.Replace(keyValuePair.Key, keyValuePair.Value);
             }

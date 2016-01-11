@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    using ConsoleApplication1.Enums;
-
     using TextToSpeech.Enums;
 
     public class SyllablesService : ISyllablesService
