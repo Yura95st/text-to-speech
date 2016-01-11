@@ -1,8 +1,8 @@
-﻿namespace TextToSpeech.Parsers
+﻿namespace TextToSpeech.Services.SyllablesService
 {
     using System.Collections.Generic;
 
-    public interface ISyllablesParser
+    public interface ISyllablesService
     {
         IEnumerable<string> GetSyllables(string word);
     }

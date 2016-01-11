@@ -1,4 +1,4 @@
-﻿namespace TextToSpeech.Parsers
+﻿namespace TextToSpeech.Services.SyllablesService
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
 
     using TextToSpeech.Enums;
 
-    public class SyllablesParser : ISyllablesParser
+    public class SyllablesService : ISyllablesService
     {
         private static readonly char[] obstruents = { 'к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш', 'щ' };
 
@@ -19,7 +19,7 @@
 
         private static readonly char[] vowels = { 'а', 'е', 'є', 'и', 'і', 'ї', 'о', 'у', 'ю', 'я' };
 
-        #region ISyllablesParser Members
+        #region ISyllablesService Members
 
         public IEnumerable<string> GetSyllables(string word)
         {
@@ -32,7 +32,7 @@
 
             word = word.Trim()
                 .ToLower();
-            if (!SyllablesParser.IsValidWord(word))
+            if (!SyllablesService.IsValidWord(word))
             {
                 throw new ArgumentException(string.Format("Word \"{0}\" is invalid.", word), "word");
             }
@@ -42,12 +42,12 @@
 
             while (end < word.Length)
             {
-                switch (SyllablesParser.GetCuttingMode(word, end))
+                switch (SyllablesService.GetCuttingMode(word, end))
                 {
                     case SyllableCuttingMode.Current:
                     {
                         if (end - start - 1 > 0
-                            && SyllablesParser.DoesWordContainVowel(word.Substring(start, end - start - 1)))
+                            && SyllablesService.DoesWordContainVowel(word.Substring(start, end - start - 1)))
                         {
                             syllables.Add(word.Substring(start, end - start - 1));
                             start = end - 1;
@@ -57,7 +57,7 @@
 
                     case SyllableCuttingMode.Next:
                     {
-                        if (SyllablesParser.DoesWordContainVowel(word.Substring(start, end - start)))
+                        if (SyllablesService.DoesWordContainVowel(word.Substring(start, end - start)))
                         {
                             syllables.Add(word.Substring(start, end - start));
                             start = end;
@@ -69,7 +69,7 @@
                 end++;
             }
 
-            if (SyllablesParser.DoesWordContainVowel(word.Substring(start)))
+            if (SyllablesService.DoesWordContainVowel(word.Substring(start)))
             {
                 syllables.Add(word.Substring(start));
             }
@@ -90,22 +90,22 @@
                 return false;
             }
 
-            return word.Any(SyllablesParser.IsVowel);
+            return word.Any(SyllablesService.IsVowel);
         }
 
         private static ConsonantType GetConsonantType(char c)
         {
-            if (!SyllablesParser.IsConsonant(c))
+            if (!SyllablesService.IsConsonant(c))
             {
                 throw new ArgumentException(string.Format("Char '{0}' is not a consonant.", c), "c");
             }
 
-            if (SyllablesParser.sonorouses.Contains(c))
+            if (SyllablesService.sonorouses.Contains(c))
             {
                 return ConsonantType.Sonorous;
             }
 
-            return SyllablesParser.sibilants.Contains(c) ? ConsonantType.Sibilant : ConsonantType.Obstruents;
+            return SyllablesService.sibilants.Contains(c) ? ConsonantType.Sibilant : ConsonantType.Obstruents;
         }
 
         private static SyllableCuttingMode GetCuttingMode(string word, int index)
@@ -118,39 +118,39 @@
             {
                 char thirdChar = word[index + 1] != '\'' ? word[index + 1] : word[index + 2];
 
-                if (SyllablesParser.IsVowel(firstChar) && SyllablesParser.IsConsonant(secondChar)
-                    && SyllablesParser.IsVowel(thirdChar))
+                if (SyllablesService.IsVowel(firstChar) && SyllablesService.IsConsonant(secondChar)
+                    && SyllablesService.IsVowel(thirdChar))
                 {
                     return SyllableCuttingMode.Next;
                 }
             }
 
-            if (SyllablesParser.IsConsonant(firstChar) && SyllablesParser.IsConsonant(secondChar))
+            if (SyllablesService.IsConsonant(firstChar) && SyllablesService.IsConsonant(secondChar))
             {
                 // Rule #6
                 if (firstChar == secondChar)
                 {
                     return SyllableCuttingMode.Current;
                 }
-                if (SyllablesParser.GetConsonantType(firstChar) == SyllablesParser.GetConsonantType(secondChar))
+                if (SyllablesService.GetConsonantType(firstChar) == SyllablesService.GetConsonantType(secondChar))
                 {
                     // Rule #5
-                    if (SyllablesParser.GetConsonantType(firstChar) == ConsonantType.Sonorous)
+                    if (SyllablesService.GetConsonantType(firstChar) == ConsonantType.Sonorous)
                     {
                         return SyllableCuttingMode.Next;
                     }
                     return SyllableCuttingMode.Current;
                 }
-                if (SyllablesParser.GetConsonantType(secondChar) == ConsonantType.Obstruents) // Rule #3
+                if (SyllablesService.GetConsonantType(secondChar) == ConsonantType.Obstruents) // Rule #3
                 {
                     return SyllableCuttingMode.Next;
                 }
-                if (SyllablesParser.GetConsonantType(secondChar) == ConsonantType.Sonorous) // Rule #4
+                if (SyllablesService.GetConsonantType(secondChar) == ConsonantType.Sonorous) // Rule #4
                 {
                     return SyllableCuttingMode.Current;
                 }
             }
-            else if (SyllablesParser.IsVowel(firstChar) && SyllablesParser.IsVowel(secondChar))
+            else if (SyllablesService.IsVowel(firstChar) && SyllablesService.IsVowel(secondChar))
             {
                 return SyllableCuttingMode.Next;
             }
@@ -160,8 +160,8 @@
 
         private static bool IsConsonant(char c)
         {
-            return SyllablesParser.sibilants.Contains(c) || SyllablesParser.sonorouses.Contains(c)
-                || SyllablesParser.obstruents.Contains(c);
+            return SyllablesService.sibilants.Contains(c) || SyllablesService.sonorouses.Contains(c)
+                || SyllablesService.obstruents.Contains(c);
         }
 
         private static bool IsValidWord(string word)
@@ -171,7 +171,7 @@
 
         private static bool IsVowel(char c)
         {
-            return SyllablesParser.vowels.Contains(c);
+            return SyllablesService.vowels.Contains(c);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TextToSpeech.Tests.Parsers
+﻿namespace TextToSpeech.Tests.Services.SyllablesService
 {
     using System;
     using System.Collections.Generic;
@@ -6,12 +6,12 @@
 
     using NUnit.Framework;
 
-    using TextToSpeech.Parsers;
+    using TextToSpeech.Services.SyllablesService;
 
     [TestFixture]
-    public class SyllablesParserTests
+    public class SyllablesServiceTests
     {
-        private SyllablesParser _syllablesParser;
+        private SyllablesService _syllablesService;
 
         [Test]
         public void GetSyllables_FifthRuleWords_ReturnsValidSyllables()
@@ -21,7 +21,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -36,7 +36,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -51,7 +51,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -65,7 +65,7 @@
 
             foreach (string word in words)
             {
-                Assert.Throws<ArgumentException>(() => this._syllablesParser.GetSyllables(word.Replace("-", "")));
+                Assert.Throws<ArgumentException>(() => this._syllablesService.GetSyllables(word.Replace("-", "")));
             }
         }
 
@@ -77,7 +77,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -92,7 +92,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -107,7 +107,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -117,9 +117,9 @@
         [Test]
         public void GetSyllables_WordIsNullOrEmptyOrWhiteSpace_ReturnsNoSyllables()
         {
-            Assert.IsEmpty(this._syllablesParser.GetSyllables(null));
-            Assert.IsEmpty(this._syllablesParser.GetSyllables(string.Empty));
-            Assert.IsEmpty(this._syllablesParser.GetSyllables("  "));
+            Assert.IsEmpty(this._syllablesService.GetSyllables(null));
+            Assert.IsEmpty(this._syllablesService.GetSyllables(string.Empty));
+            Assert.IsEmpty(this._syllablesService.GetSyllables("  "));
         }
 
         [Test]
@@ -129,7 +129,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -143,7 +143,7 @@
 
             foreach (string word in words)
             {
-                IEnumerable<string> syllables = this._syllablesParser.GetSyllables(word.Replace("-", ""))
+                IEnumerable<string> syllables = this._syllablesService.GetSyllables(word.Replace("-", ""))
                     .ToList();
 
                 Assert.AreEqual(word.Split('-'), syllables);
@@ -153,7 +153,7 @@
         [SetUp]
         public void Init()
         {
-            this._syllablesParser = new SyllablesParser();
+            this._syllablesService = new SyllablesService();
         }
     }
 }

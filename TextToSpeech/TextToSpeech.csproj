@@ -57,8 +57,14 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Parsers\ISyllablesParser.cs" />
-    <Compile Include="Parsers\SyllablesParser.cs" />
+    <Compile Include="Services\SyllablesService\ISyllablesService.cs" />
+    <Compile Include="Services\SyllablesService\SyllablesService.cs" />
+    <Compile Include="Services\TranscriptionService\ITranscriptionService.cs" />
+    <Compile Include="Services\TranscriptionService\TranscriptionService.cs" />
+    <Compile Include="Services\WordVoiceService\IWordVoiceService.cs" />
+    <Compile Include="Services\WordVoiceService\WordVoiceService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utils\Guard.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -69,19 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -94,36 +88,27 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Themes\sounds\вю.wav" />
+    <EmbeddedResource Include="Themes\sounds\вьу.wav" />
     <EmbeddedResource Include="Themes\sounds\ги.wav" />
     <EmbeddedResource Include="Themes\sounds\гу.wav" />
-    <EmbeddedResource Include="Themes\sounds\джю.wav" />
-    <EmbeddedResource Include="Themes\sounds\джя.wav" />
-    <EmbeddedResource Include="Themes\sounds\зє.wav" />
-    <EmbeddedResource Include="Themes\sounds\зю.wav" />
-    <EmbeddedResource Include="Themes\sounds\рю.wav" />
+    <EmbeddedResource Include="Themes\sounds\джьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\джьа.wav" />
+    <EmbeddedResource Include="Themes\sounds\зье.wav" />
+    <EmbeddedResource Include="Themes\sounds\зьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\рьу.wav" />
     <EmbeddedResource Include="Themes\sounds\фьо.wav" />
     <EmbeddedResource Include="Themes\sounds\хьо.wav" />
     <EmbeddedResource Include="Themes\sounds\чьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\щє.wav" />
-    <EmbeddedResource Include="Themes\sounds\щі.wav" />
-    <EmbeddedResource Include="Themes\sounds\ща.wav" />
-    <EmbeddedResource Include="Themes\sounds\ще.wav" />
-    <EmbeddedResource Include="Themes\sounds\щи.wav" />
-    <EmbeddedResource Include="Themes\sounds\щу.wav" />
-    <EmbeddedResource Include="Themes\sounds\щь.wav" />
-    <EmbeddedResource Include="Themes\sounds\щю.wav" />
-    <EmbeddedResource Include="Themes\sounds\щя.wav" />
     <EmbeddedResource Include="Themes\sounds\ґи.wav" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Themes\sounds\є.wav" />
+    <EmbeddedResource Include="Themes\sounds\йе.wav" />
     <EmbeddedResource Include="Themes\sounds\і.wav" />
-    <EmbeddedResource Include="Themes\sounds\ї.wav" />
+    <EmbeddedResource Include="Themes\sounds\йі.wav" />
     <EmbeddedResource Include="Themes\sounds\а.wav" />
     <EmbeddedResource Include="Themes\sounds\б.wav" />
-    <EmbeddedResource Include="Themes\sounds\бє.wav" />
-    <EmbeddedResource Include="Themes\sounds\бі.wav" />
+    <EmbeddedResource Include="Themes\sounds\бье.wav" />
+    <EmbeddedResource Include="Themes\sounds\бьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ба.wav" />
     <EmbeddedResource Include="Themes\sounds\бе.wav" />
     <EmbeddedResource Include="Themes\sounds\би.wav" />
@@ -131,11 +116,11 @@
     <EmbeddedResource Include="Themes\sounds\бу.wav" />
     <EmbeddedResource Include="Themes\sounds\бь.wav" />
     <EmbeddedResource Include="Themes\sounds\бьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\бю.wav" />
-    <EmbeddedResource Include="Themes\sounds\бя.wav" />
+    <EmbeddedResource Include="Themes\sounds\бьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\бьа.wav" />
     <EmbeddedResource Include="Themes\sounds\в.wav" />
-    <EmbeddedResource Include="Themes\sounds\вє.wav" />
-    <EmbeddedResource Include="Themes\sounds\ві.wav" />
+    <EmbeddedResource Include="Themes\sounds\вье.wav" />
+    <EmbeddedResource Include="Themes\sounds\вьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ва.wav" />
     <EmbeddedResource Include="Themes\sounds\ве.wav" />
     <EmbeddedResource Include="Themes\sounds\ви.wav" />
@@ -143,25 +128,25 @@
     <EmbeddedResource Include="Themes\sounds\ву.wav" />
     <EmbeddedResource Include="Themes\sounds\вь.wav" />
     <EmbeddedResource Include="Themes\sounds\вьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\вя.wav" />
+    <EmbeddedResource Include="Themes\sounds\вьа.wav" />
     <EmbeddedResource Include="Themes\sounds\г.wav" />
-    <EmbeddedResource Include="Themes\sounds\гє.wav" />
-    <EmbeddedResource Include="Themes\sounds\гі.wav" />
+    <EmbeddedResource Include="Themes\sounds\гье.wav" />
+    <EmbeddedResource Include="Themes\sounds\гьі.wav" />
     <EmbeddedResource Include="Themes\sounds\га.wav" />
     <EmbeddedResource Include="Themes\sounds\ге.wav" />
     <EmbeddedResource Include="Themes\sounds\го.wav" />
     <EmbeddedResource Include="Themes\sounds\гь.wav" />
     <EmbeddedResource Include="Themes\sounds\гьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\гю.wav" />
-    <EmbeddedResource Include="Themes\sounds\гя.wav" />
+    <EmbeddedResource Include="Themes\sounds\гьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\гьа.wav" />
     <EmbeddedResource Include="Themes\sounds\д.wav" />
-    <EmbeddedResource Include="Themes\sounds\дє.wav" />
-    <EmbeddedResource Include="Themes\sounds\ді.wav" />
+    <EmbeddedResource Include="Themes\sounds\дье.wav" />
+    <EmbeddedResource Include="Themes\sounds\дьі.wav" />
     <EmbeddedResource Include="Themes\sounds\да.wav" />
     <EmbeddedResource Include="Themes\sounds\де.wav" />
     <EmbeddedResource Include="Themes\sounds\дж.wav" />
-    <EmbeddedResource Include="Themes\sounds\джє.wav" />
-    <EmbeddedResource Include="Themes\sounds\джі.wav" />
+    <EmbeddedResource Include="Themes\sounds\джье.wav" />
+    <EmbeddedResource Include="Themes\sounds\джьі.wav" />
     <EmbeddedResource Include="Themes\sounds\джа.wav" />
     <EmbeddedResource Include="Themes\sounds\дже.wav" />
     <EmbeddedResource Include="Themes\sounds\джи.wav" />
@@ -170,8 +155,8 @@
     <EmbeddedResource Include="Themes\sounds\джь.wav" />
     <EmbeddedResource Include="Themes\sounds\джьо.wav" />
     <EmbeddedResource Include="Themes\sounds\дз.wav" />
-    <EmbeddedResource Include="Themes\sounds\дзє.wav" />
-    <EmbeddedResource Include="Themes\sounds\дзі.wav" />
+    <EmbeddedResource Include="Themes\sounds\дзье.wav" />
+    <EmbeddedResource Include="Themes\sounds\дзьі.wav" />
     <EmbeddedResource Include="Themes\sounds\дза.wav" />
     <EmbeddedResource Include="Themes\sounds\дзе.wav" />
     <EmbeddedResource Include="Themes\sounds\дзи.wav" />
@@ -179,19 +164,19 @@
     <EmbeddedResource Include="Themes\sounds\дзу.wav" />
     <EmbeddedResource Include="Themes\sounds\дзь.wav" />
     <EmbeddedResource Include="Themes\sounds\дзьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\дзю.wav" />
-    <EmbeddedResource Include="Themes\sounds\дзя.wav" />
+    <EmbeddedResource Include="Themes\sounds\дзьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\дзьа.wav" />
     <EmbeddedResource Include="Themes\sounds\ди.wav" />
     <EmbeddedResource Include="Themes\sounds\до.wav" />
     <EmbeddedResource Include="Themes\sounds\ду.wav" />
     <EmbeddedResource Include="Themes\sounds\дь.wav" />
     <EmbeddedResource Include="Themes\sounds\дьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\дю.wav" />
-    <EmbeddedResource Include="Themes\sounds\дя.wav" />
+    <EmbeddedResource Include="Themes\sounds\дьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\дьа.wav" />
     <EmbeddedResource Include="Themes\sounds\е.wav" />
     <EmbeddedResource Include="Themes\sounds\ж.wav" />
-    <EmbeddedResource Include="Themes\sounds\жє.wav" />
-    <EmbeddedResource Include="Themes\sounds\жі.wav" />
+    <EmbeddedResource Include="Themes\sounds\жье.wav" />
+    <EmbeddedResource Include="Themes\sounds\жьі.wav" />
     <EmbeddedResource Include="Themes\sounds\жа.wav" />
     <EmbeddedResource Include="Themes\sounds\же.wav" />
     <EmbeddedResource Include="Themes\sounds\жи.wav" />
@@ -199,10 +184,10 @@
     <EmbeddedResource Include="Themes\sounds\жу.wav" />
     <EmbeddedResource Include="Themes\sounds\жь.wav" />
     <EmbeddedResource Include="Themes\sounds\жьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\жю.wav" />
-    <EmbeddedResource Include="Themes\sounds\жя.wav" />
+    <EmbeddedResource Include="Themes\sounds\жьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\жьа.wav" />
     <EmbeddedResource Include="Themes\sounds\з.wav" />
-    <EmbeddedResource Include="Themes\sounds\зі.wav" />
+    <EmbeddedResource Include="Themes\sounds\зьі.wav" />
     <EmbeddedResource Include="Themes\sounds\за.wav" />
     <EmbeddedResource Include="Themes\sounds\зе.wav" />
     <EmbeddedResource Include="Themes\sounds\зи.wav" />
@@ -210,13 +195,13 @@
     <EmbeddedResource Include="Themes\sounds\зу.wav" />
     <EmbeddedResource Include="Themes\sounds\зь.wav" />
     <EmbeddedResource Include="Themes\sounds\зьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\зя.wav" />
+    <EmbeddedResource Include="Themes\sounds\зьа.wav" />
     <EmbeddedResource Include="Themes\sounds\и.wav" />
     <EmbeddedResource Include="Themes\sounds\й.wav" />
     <EmbeddedResource Include="Themes\sounds\йо.wav" />
     <EmbeddedResource Include="Themes\sounds\к.wav" />
-    <EmbeddedResource Include="Themes\sounds\кє.wav" />
-    <EmbeddedResource Include="Themes\sounds\кі.wav" />
+    <EmbeddedResource Include="Themes\sounds\кье.wav" />
+    <EmbeddedResource Include="Themes\sounds\кьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ка.wav" />
     <EmbeddedResource Include="Themes\sounds\ке.wav" />
     <EmbeddedResource Include="Themes\sounds\ки.wav" />
@@ -224,11 +209,11 @@
     <EmbeddedResource Include="Themes\sounds\ку.wav" />
     <EmbeddedResource Include="Themes\sounds\кь.wav" />
     <EmbeddedResource Include="Themes\sounds\кьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\кю.wav" />
-    <EmbeddedResource Include="Themes\sounds\кя.wav" />
+    <EmbeddedResource Include="Themes\sounds\кьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\кьа.wav" />
     <EmbeddedResource Include="Themes\sounds\л.wav" />
-    <EmbeddedResource Include="Themes\sounds\лє.wav" />
-    <EmbeddedResource Include="Themes\sounds\лі.wav" />
+    <EmbeddedResource Include="Themes\sounds\лье.wav" />
+    <EmbeddedResource Include="Themes\sounds\льі.wav" />
     <EmbeddedResource Include="Themes\sounds\ла.wav" />
     <EmbeddedResource Include="Themes\sounds\ле.wav" />
     <EmbeddedResource Include="Themes\sounds\ли.wav" />
@@ -236,11 +221,11 @@
     <EmbeddedResource Include="Themes\sounds\лу.wav" />
     <EmbeddedResource Include="Themes\sounds\ль.wav" />
     <EmbeddedResource Include="Themes\sounds\льо.wav" />
-    <EmbeddedResource Include="Themes\sounds\лю.wav" />
-    <EmbeddedResource Include="Themes\sounds\ля.wav" />
+    <EmbeddedResource Include="Themes\sounds\льу.wav" />
+    <EmbeddedResource Include="Themes\sounds\льа.wav" />
     <EmbeddedResource Include="Themes\sounds\м.wav" />
-    <EmbeddedResource Include="Themes\sounds\мє.wav" />
-    <EmbeddedResource Include="Themes\sounds\мі.wav" />
+    <EmbeddedResource Include="Themes\sounds\мье.wav" />
+    <EmbeddedResource Include="Themes\sounds\мьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ма.wav" />
     <EmbeddedResource Include="Themes\sounds\ме.wav" />
     <EmbeddedResource Include="Themes\sounds\ми.wav" />
@@ -248,11 +233,11 @@
     <EmbeddedResource Include="Themes\sounds\му.wav" />
     <EmbeddedResource Include="Themes\sounds\мь.wav" />
     <EmbeddedResource Include="Themes\sounds\мьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\мю.wav" />
-    <EmbeddedResource Include="Themes\sounds\мя.wav" />
+    <EmbeddedResource Include="Themes\sounds\мьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\мьа.wav" />
     <EmbeddedResource Include="Themes\sounds\н.wav" />
-    <EmbeddedResource Include="Themes\sounds\нє.wav" />
-    <EmbeddedResource Include="Themes\sounds\ні.wav" />
+    <EmbeddedResource Include="Themes\sounds\нье.wav" />
+    <EmbeddedResource Include="Themes\sounds\ньі.wav" />
     <EmbeddedResource Include="Themes\sounds\на.wav" />
     <EmbeddedResource Include="Themes\sounds\не.wav" />
     <EmbeddedResource Include="Themes\sounds\ни.wav" />
@@ -260,12 +245,12 @@
     <EmbeddedResource Include="Themes\sounds\ну.wav" />
     <EmbeddedResource Include="Themes\sounds\нь.wav" />
     <EmbeddedResource Include="Themes\sounds\ньо.wav" />
-    <EmbeddedResource Include="Themes\sounds\ню.wav" />
-    <EmbeddedResource Include="Themes\sounds\ня.wav" />
+    <EmbeddedResource Include="Themes\sounds\ньу.wav" />
+    <EmbeddedResource Include="Themes\sounds\ньа.wav" />
     <EmbeddedResource Include="Themes\sounds\о.wav" />
     <EmbeddedResource Include="Themes\sounds\п.wav" />
-    <EmbeddedResource Include="Themes\sounds\пє.wav" />
-    <EmbeddedResource Include="Themes\sounds\пі.wav" />
+    <EmbeddedResource Include="Themes\sounds\пье.wav" />
+    <EmbeddedResource Include="Themes\sounds\пьі.wav" />
     <EmbeddedResource Include="Themes\sounds\па.wav" />
     <EmbeddedResource Include="Themes\sounds\пе.wav" />
     <EmbeddedResource Include="Themes\sounds\пи.wav" />
@@ -273,11 +258,11 @@
     <EmbeddedResource Include="Themes\sounds\пу.wav" />
     <EmbeddedResource Include="Themes\sounds\пь.wav" />
     <EmbeddedResource Include="Themes\sounds\пьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\пю.wav" />
-    <EmbeddedResource Include="Themes\sounds\пя.wav" />
+    <EmbeddedResource Include="Themes\sounds\пьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\пьа.wav" />
     <EmbeddedResource Include="Themes\sounds\р.wav" />
-    <EmbeddedResource Include="Themes\sounds\рє.wav" />
-    <EmbeddedResource Include="Themes\sounds\рі.wav" />
+    <EmbeddedResource Include="Themes\sounds\рье.wav" />
+    <EmbeddedResource Include="Themes\sounds\рьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ра.wav" />
     <EmbeddedResource Include="Themes\sounds\ре.wav" />
     <EmbeddedResource Include="Themes\sounds\ри.wav" />
@@ -285,10 +270,10 @@
     <EmbeddedResource Include="Themes\sounds\ру.wav" />
     <EmbeddedResource Include="Themes\sounds\рь.wav" />
     <EmbeddedResource Include="Themes\sounds\рьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\ря.wav" />
+    <EmbeddedResource Include="Themes\sounds\рьа.wav" />
     <EmbeddedResource Include="Themes\sounds\с.wav" />
-    <EmbeddedResource Include="Themes\sounds\сє.wav" />
-    <EmbeddedResource Include="Themes\sounds\сі.wav" />
+    <EmbeddedResource Include="Themes\sounds\сье.wav" />
+    <EmbeddedResource Include="Themes\sounds\сьі.wav" />
     <EmbeddedResource Include="Themes\sounds\са.wav" />
     <EmbeddedResource Include="Themes\sounds\се.wav" />
     <EmbeddedResource Include="Themes\sounds\си.wav" />
@@ -296,11 +281,11 @@
     <EmbeddedResource Include="Themes\sounds\су.wav" />
     <EmbeddedResource Include="Themes\sounds\сь.wav" />
     <EmbeddedResource Include="Themes\sounds\сьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\сю.wav" />
-    <EmbeddedResource Include="Themes\sounds\ся.wav" />
+    <EmbeddedResource Include="Themes\sounds\сьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\сьа.wav" />
     <EmbeddedResource Include="Themes\sounds\т.wav" />
-    <EmbeddedResource Include="Themes\sounds\тє.wav" />
-    <EmbeddedResource Include="Themes\sounds\ті.wav" />
+    <EmbeddedResource Include="Themes\sounds\тье.wav" />
+    <EmbeddedResource Include="Themes\sounds\тьі.wav" />
     <EmbeddedResource Include="Themes\sounds\та.wav" />
     <EmbeddedResource Include="Themes\sounds\те.wav" />
     <EmbeddedResource Include="Themes\sounds\ти.wav" />
@@ -308,34 +293,34 @@
     <EmbeddedResource Include="Themes\sounds\ту.wav" />
     <EmbeddedResource Include="Themes\sounds\ть.wav" />
     <EmbeddedResource Include="Themes\sounds\тьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\тю.wav" />
-    <EmbeddedResource Include="Themes\sounds\тя.wav" />
+    <EmbeddedResource Include="Themes\sounds\тьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\тьа.wav" />
     <EmbeddedResource Include="Themes\sounds\у.wav" />
     <EmbeddedResource Include="Themes\sounds\ф.wav" />
-    <EmbeddedResource Include="Themes\sounds\фє.wav" />
-    <EmbeddedResource Include="Themes\sounds\фі.wav" />
+    <EmbeddedResource Include="Themes\sounds\фье.wav" />
+    <EmbeddedResource Include="Themes\sounds\фьі.wav" />
     <EmbeddedResource Include="Themes\sounds\фа.wav" />
     <EmbeddedResource Include="Themes\sounds\фе.wav" />
     <EmbeddedResource Include="Themes\sounds\фи.wav" />
     <EmbeddedResource Include="Themes\sounds\фо.wav" />
     <EmbeddedResource Include="Themes\sounds\фу.wav" />
     <EmbeddedResource Include="Themes\sounds\фь.wav" />
-    <EmbeddedResource Include="Themes\sounds\фю.wav" />
-    <EmbeddedResource Include="Themes\sounds\фя.wav" />
+    <EmbeddedResource Include="Themes\sounds\фьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\фьа.wav" />
     <EmbeddedResource Include="Themes\sounds\х.wav" />
-    <EmbeddedResource Include="Themes\sounds\хє.wav" />
-    <EmbeddedResource Include="Themes\sounds\хі.wav" />
+    <EmbeddedResource Include="Themes\sounds\хье.wav" />
+    <EmbeddedResource Include="Themes\sounds\хьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ха.wav" />
     <EmbeddedResource Include="Themes\sounds\хе.wav" />
     <EmbeddedResource Include="Themes\sounds\хи.wav" />
     <EmbeddedResource Include="Themes\sounds\хо.wav" />
     <EmbeddedResource Include="Themes\sounds\ху.wav" />
     <EmbeddedResource Include="Themes\sounds\хь.wav" />
-    <EmbeddedResource Include="Themes\sounds\хю.wav" />
-    <EmbeddedResource Include="Themes\sounds\хя.wav" />
+    <EmbeddedResource Include="Themes\sounds\хьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\хьа.wav" />
     <EmbeddedResource Include="Themes\sounds\ц.wav" />
-    <EmbeddedResource Include="Themes\sounds\цє.wav" />
-    <EmbeddedResource Include="Themes\sounds\ці.wav" />
+    <EmbeddedResource Include="Themes\sounds\цье.wav" />
+    <EmbeddedResource Include="Themes\sounds\цьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ца.wav" />
     <EmbeddedResource Include="Themes\sounds\це.wav" />
     <EmbeddedResource Include="Themes\sounds\ци.wav" />
@@ -343,45 +328,43 @@
     <EmbeddedResource Include="Themes\sounds\цу.wav" />
     <EmbeddedResource Include="Themes\sounds\ць.wav" />
     <EmbeddedResource Include="Themes\sounds\цьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\цю.wav" />
-    <EmbeddedResource Include="Themes\sounds\ця.wav" />
+    <EmbeddedResource Include="Themes\sounds\цьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\цьа.wav" />
     <EmbeddedResource Include="Themes\sounds\ч.wav" />
-    <EmbeddedResource Include="Themes\sounds\чє.wav" />
-    <EmbeddedResource Include="Themes\sounds\чі.wav" />
+    <EmbeddedResource Include="Themes\sounds\чье.wav" />
+    <EmbeddedResource Include="Themes\sounds\чьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ча.wav" />
     <EmbeddedResource Include="Themes\sounds\че.wav" />
     <EmbeddedResource Include="Themes\sounds\чи.wav" />
     <EmbeddedResource Include="Themes\sounds\чо.wav" />
     <EmbeddedResource Include="Themes\sounds\чу.wav" />
     <EmbeddedResource Include="Themes\sounds\чь.wav" />
-    <EmbeddedResource Include="Themes\sounds\чю.wav" />
-    <EmbeddedResource Include="Themes\sounds\чя.wav" />
+    <EmbeddedResource Include="Themes\sounds\чьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\чьа.wav" />
     <EmbeddedResource Include="Themes\sounds\ш.wav" />
-    <EmbeddedResource Include="Themes\sounds\шє.wav" />
-    <EmbeddedResource Include="Themes\sounds\ші.wav" />
+    <EmbeddedResource Include="Themes\sounds\шье.wav" />
+    <EmbeddedResource Include="Themes\sounds\шьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ша.wav" />
     <EmbeddedResource Include="Themes\sounds\ше.wav" />
     <EmbeddedResource Include="Themes\sounds\ши.wav" />
     <EmbeddedResource Include="Themes\sounds\шо.wav" />
     <EmbeddedResource Include="Themes\sounds\шу.wav" />
     <EmbeddedResource Include="Themes\sounds\шь.wav" />
-    <EmbeddedResource Include="Themes\sounds\шю.wav" />
-    <EmbeddedResource Include="Themes\sounds\шя.wav" />
-    <EmbeddedResource Include="Themes\sounds\щ.wav" />
-    <EmbeddedResource Include="Themes\sounds\що.wav" />
-    <EmbeddedResource Include="Themes\sounds\ю.wav" />
-    <EmbeddedResource Include="Themes\sounds\я.wav" />
+    <EmbeddedResource Include="Themes\sounds\шьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\шьа.wav" />
+    <EmbeddedResource Include="Themes\sounds\йу.wav" />
+    <EmbeddedResource Include="Themes\sounds\йа.wav" />
     <EmbeddedResource Include="Themes\sounds\ґ.wav" />
-    <EmbeddedResource Include="Themes\sounds\ґє.wav" />
-    <EmbeddedResource Include="Themes\sounds\ґі.wav" />
+    <EmbeddedResource Include="Themes\sounds\ґье.wav" />
+    <EmbeddedResource Include="Themes\sounds\ґьі.wav" />
     <EmbeddedResource Include="Themes\sounds\ґа.wav" />
     <EmbeddedResource Include="Themes\sounds\ґе.wav" />
     <EmbeddedResource Include="Themes\sounds\ґо.wav" />
     <EmbeddedResource Include="Themes\sounds\ґу.wav" />
     <EmbeddedResource Include="Themes\sounds\ґь.wav" />
     <EmbeddedResource Include="Themes\sounds\ґьо.wav" />
-    <EmbeddedResource Include="Themes\sounds\ґю.wav" />
-    <EmbeddedResource Include="Themes\sounds\ґя.wav" />
+    <EmbeddedResource Include="Themes\sounds\ґьу.wav" />
+    <EmbeddedResource Include="Themes\sounds\ґьа.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

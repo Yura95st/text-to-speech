@@ -4,7 +4,9 @@
     using System.Linq;
     using System.Windows;
 
-    using TextToSpeech.Parsers;
+    using TextToSpeech.Services.SyllablesService;
+    using TextToSpeech.Services.TranscriptionService;
+    using TextToSpeech.Services.WordVoiceService;
 
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
@@ -15,12 +17,35 @@
         {
             this.InitializeComponent();
 
-            string word = "дем'ян";
+            //Assembly assembly = Assembly.GetExecutingAssembly();
+            //var list = assembly.GetManifestResourceNames().ToList();
+            //list.Sort();
 
-            ISyllablesParser syllablesParser = new SyllablesParser();
+            //var sb =new StringBuilder(200);
+            //foreach (string manifestResourceName in list)
+            //{
+            //    var nameParts = manifestResourceName.Split('.');
 
-            IEnumerable<string> syllables = syllablesParser.GetSyllables(word)
-                .ToList();
+            //    sb.Append(string.Format("\"{0}\", ", nameParts[nameParts.Length - 2]));
+            //}
+
+            ISyllablesService syllablesService = new SyllablesService();
+            ITranscriptionService transcriptionService = new TranscriptionService();
+            IWordVoiceService wordVoiceService = new WordVoiceService();
+
+            string str =
+                "річці принісши зшиток вивізши зжовклий зчепити безчинство джемом намажся вивчишся озвучся доріжці чашці підживити підземний"
+                    + "відспівати відцвісти відчеканити підшити братство учіться коритце вотчина багатшати студентство  кореспондентський туристський "
+                    + "артистці невістчин шістдесят шістсот поїздці ";
+
+            foreach (string word in str.Split(' '))
+            {
+                IEnumerable<string> syllables = syllablesService.GetSyllables(word)
+                    .ToList();
+
+                string wordTranscription = transcriptionService.GetTranscription(str);
+                wordVoiceService.PlayWord(wordTranscription);
+            }
         }
     }
 }
