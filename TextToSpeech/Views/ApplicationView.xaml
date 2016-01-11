@@ -1,0 +1,81 @@
+﻿<Window x:Class="TextToSpeech.Views.ApplicationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Text-to-speech"
+        MinWidth="1100"
+        MinHeight="600"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Background="{StaticResource MainBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Height="40"
+                    Margin="5,0,0,0"
+                    Orientation="Horizontal">
+
+            <Button Command="{Binding Path=Commands.PlayCommand,
+                                      Mode=OneWay}"
+                    Content="Play"
+                    Style="{StaticResource PlayTopPanelButton}" />
+
+            <Button HorizontalAlignment="Left"
+                    Command="{Binding Path=Commands.StopCommand,
+                                      Mode=OneWay}"
+                    Content="Stop"
+                    Style="{StaticResource StopTopPanelButton}" />
+
+            <Border Style="{StaticResource TopPanelDivider}" />
+
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="InputTextBox"
+                     Grid.Row="0"
+                     VerticalAlignment="Stretch"
+                     FontSize="30"
+                     Padding="10,5"
+                     SizeChanged="InputTextBox_OnSizeChanged"
+                     Style="{StaticResource InputTextBox}"
+                     Text="{Binding Path=InputText,
+                                    Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"
+                     TextChanged="TextBoxBase_OnTextChanged" />
+
+
+            <TextBox Grid.Row="1"
+                     VerticalAlignment="Stretch"
+                     FontSize="{Binding Path=FontSize,
+                                        ElementName=InputTextBox}"
+                     Padding="10,5"
+                     Style="{StaticResource TranscriptionTextBox}"
+                     Text="{Binding Path=TranscriptionText,
+                                    Mode=OneWay}" />
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Height="25"
+              Background="{StaticResource FooterBackgroundBrush}">
+            <StackPanel MaxWidth="190"
+                        Margin="0,0,20,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <TextBlock Foreground="{StaticResource FooterForegroundBrush}" Text="Words" />
+                <TextBlock Margin="5,0,0,0"
+                           Foreground="{StaticResource FooterForegroundBrush}"
+                           Text="{Binding Path=WordsCount,
+                                          Mode=OneWay}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
