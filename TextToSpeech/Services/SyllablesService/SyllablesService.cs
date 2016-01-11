@@ -67,13 +67,13 @@
                 end++;
             }
 
-            if (SyllablesService.DoesWordContainVowel(word.Substring(start)))
+            if (!SyllablesService.DoesWordContainVowel(word.Substring(start)) && syllables.Count - 1 >= 0)
             {
-                syllables.Add(word.Substring(start));
+                syllables[syllables.Count - 1] += word.Substring(start);
             }
             else
             {
-                syllables[syllables.Count - 1] += word.Substring(start);
+                syllables.Add(word.Substring(start));
             }
 
             return syllables;

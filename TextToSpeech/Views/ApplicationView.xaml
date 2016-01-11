@@ -36,6 +36,7 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -53,14 +54,35 @@
                                     UpdateSourceTrigger=PropertyChanged}"
                      TextChanged="TextBoxBase_OnTextChanged" />
 
+            <StackPanel Grid.Row="1"
+                        Height="30"
+                        Background="{StaticResource OutputPanelControlsBackgroundBrush}"
+                        Orientation="Horizontal">
 
-            <TextBox Grid.Row="1"
+                <TextBlock Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Text="Mode: " />
+
+                <ComboBox Width="95"
+                          Height="20"
+                          Margin="5,0,0,0"
+                          VerticalAlignment="Center"
+                          DisplayMemberPath="Value"
+                          ItemsSource="{Binding Path=OutputModeProperties}"
+                          SelectedValue="{Binding Path=OutputMode,
+                                                  Mode=TwoWay,
+                                                  UpdateSourceTrigger=PropertyChanged}"
+                          SelectedValuePath="Key"
+                          Style="{StaticResource FlatComboBox}" />
+            </StackPanel>
+
+            <TextBox Grid.Row="2"
                      VerticalAlignment="Stretch"
                      FontSize="{Binding Path=FontSize,
                                         ElementName=InputTextBox}"
                      Padding="10,5"
                      Style="{StaticResource TranscriptionTextBox}"
-                     Text="{Binding Path=TranscriptionText,
+                     Text="{Binding Path=OutputText,
                                     Mode=OneWay}" />
         </Grid>
 

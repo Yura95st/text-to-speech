@@ -15,6 +15,10 @@
     <SolidColorBrush x:Key="PressedButtonForegroundBrush" Color="#FFFFFF" />
     <SolidColorBrush x:Key="MouseOverButtonBackgroundBrush" Color="#FEFEFE" />
 
+    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#DBDDE6" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="#FCFCFC" />
+    <SolidColorBrush x:Key="OutputPanelControlsBackgroundBrush" Color="#E6E7E8" />
+
     <Style x:Key="TopPanelButton"
            BasedOn="{x:Null}"
            TargetType="{x:Type Button}">
@@ -189,6 +193,25 @@
         <Setter Property="Background" Value="#EFEFF2" />
         <Setter Property="BorderThickness" Value="1,0,0,0" />
         <Setter Property="BorderBrush" Value="#CCCEDB" />
+    </Style>
+
+    <Style x:Key="FlatComboBoxItem" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Background" Value="{StaticResource ComboBoxBackgroundBrush}" />
+    </Style>
+
+    <Style x:Key="FlatComboBox" TargetType="{x:Type ComboBox}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource ComboBoxBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource ComboBoxBackgroundBrush}" />
+        <Setter Property="Padding" Value="5,0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource FlatComboBoxItem}" />
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Opacity" Value="0.5" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

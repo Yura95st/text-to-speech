@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Enums\OutputMode.cs" />
     <Compile Include="Enums\PlayerState.cs" />
     <Compile Include="Enums\ConsonantType.cs" />
     <Compile Include="Enums\SyllableCuttingMode.cs" />

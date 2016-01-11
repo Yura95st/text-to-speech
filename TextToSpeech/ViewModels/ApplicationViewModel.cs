@@ -8,6 +8,7 @@
 
     using GalaSoft.MvvmLight;
 
+    using TextToSpeech.Enums;
     using TextToSpeech.Services.PlaybackService;
     using TextToSpeech.Services.SyllablesService;
     using TextToSpeech.Services.TranscriptionService;
@@ -22,17 +23,19 @@
             '\"'
         };
 
-        private readonly ITranscriptionService _transcriptionService;
-
         private readonly IPlaybackService _playbackService;
+
+        private readonly ISyllablesService _syllablesService;
+
+        private readonly ITranscriptionService _transcriptionService;
 
         private string _inputText;
 
         private bool _isInputTextBoxEnabled;
 
-        private ISyllablesService _syllablesService;
+        private OutputMode _outputMode;
 
-        private string _transcriptionText;
+        private IDictionary<OutputMode, string> _outputModeProperties;
 
         private IList<string> _words;
 
@@ -50,9 +53,10 @@
             this._playbackService.PlaybackCompleted += this.PlaybackServiceOnPlaybackCompleted;
 
             this._inputText = "";
-            this._transcriptionText = "";
-            this._words = new List<string>();
             this._isInputTextBoxEnabled = true;
+            this._outputMode = OutputMode.Transcription;
+            this.OutputText = "";
+            this._words = new List<string>();
 
             this.Commands = new ApplicationViewModelCommands(this);
         }
@@ -77,7 +81,7 @@
                     this.RaisePropertyChanged(() => this.InputText);
 
                     this.UpdateWords();
-                    this.UpdateTranscriptionText();
+                    this.UpdateOutputText();
                 }
             }
         }
@@ -99,12 +103,42 @@
             }
         }
 
-        public string TranscriptionText
+        public OutputMode OutputMode
         {
             get
             {
-                return this._transcriptionText;
+                return this._outputMode;
             }
+            set
+            {
+                if (value != this._outputMode)
+                {
+                    this._outputMode = value;
+                    this.RaisePropertyChanged(() => this.OutputMode);
+
+                    this.UpdateOutputText();
+                }
+            }
+        }
+
+        public IDictionary<OutputMode, string> OutputModeProperties
+        {
+            get
+            {
+                if (this._outputModeProperties == null)
+                {
+                    this._outputModeProperties = new Dictionary<OutputMode, string>
+                    { { OutputMode.Syllables, "Syllables" }, { OutputMode.Transcription, "Transcription" } };
+                }
+
+                return this._outputModeProperties;
+            }
+        }
+
+        public string OutputText
+        {
+            get;
+            private set;
         }
 
         public int WordsCount
@@ -137,9 +171,54 @@
             this._playbackService.Stop();
         }
 
+        private string GetSyllablesText()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (string word in this._words.Select(w => w.ToLower()))
+            {
+                bool isFirstSyllable = true;
+
+                try
+                {
+                    foreach (string syllable in this._syllablesService.GetSyllables(word))
+                    {
+                        if (!isFirstSyllable)
+                        {
+                            sb.Append("-");
+                        }
+
+                        sb.Append(syllable);
+
+                        isFirstSyllable = false;
+                    }
+                }
+                catch (ArgumentException)
+                {
+                    sb.Append(word);
+                }
+
+                sb.Append(" ");
+            }
+
+            return sb.ToString();
+        }
+
         private IEnumerable<string> GetTranscriptedWords()
         {
             return this._words.Select(word => this._transcriptionService.GetTranscription(word.ToLower()));
+        }
+
+        private string GetTranscriptionsText()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (string word in this.GetTranscriptedWords())
+            {
+                sb.Append(string.Format("{0} ", word));
+            }
+
+            return sb.ToString();
         }
 
         private static IEnumerable<string> GetWordsFromText(string text)
@@ -156,17 +235,19 @@
             }
         }
 
-        private void UpdateTranscriptionText()
+        private void PlaybackServiceOnPlaybackCompleted(object sender, EventArgs eventArgs)
         {
-            StringBuilder sb = new StringBuilder();
+            this.IsInputTextBoxEnabled = true;
 
-            foreach (string word in this.GetTranscriptedWords())
-            {
-                sb.Append(string.Format("{0} ", word));
-            }
+            CommandManager.InvalidateRequerySuggested();
+        }
 
-            this._transcriptionText = sb.ToString();
-            this.RaisePropertyChanged(() => this.TranscriptionText);
+        private void UpdateOutputText()
+        {
+            this.OutputText = (this._outputMode == OutputMode.Syllables)
+                ? this.GetSyllablesText() : this.GetTranscriptionsText();
+
+            this.RaisePropertyChanged(() => this.OutputText);
         }
 
         private void UpdateWords()
@@ -177,13 +258,6 @@
             this._playbackService.Init(this.GetTranscriptedWords());
 
             this.RaisePropertyChanged(() => this.WordsCount);
-        }
-
-        private void PlaybackServiceOnPlaybackCompleted(object sender, EventArgs eventArgs)
-        {
-            this.IsInputTextBoxEnabled = true;
-
-            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
